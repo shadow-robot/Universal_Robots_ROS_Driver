@@ -55,7 +55,8 @@ std::ostream& operator<<(std::ostream& out, const std::array<T, N>& item)
  * \returns Enum value converted to underlying type
  */
 template <typename E>
-constexpr typename std::underlying_type<E>::type toUnderlying(const E e) noexcept {
-    return static_cast<typename std::underlying_type<E>::type>(e);
+constexpr typename std::underlying_type<E>::type toUnderlying(const E e) noexcept
+{
+  return static_cast<typename std::underlying_type<E>::type>(e);
 }
 }  // namespace ur_driver
