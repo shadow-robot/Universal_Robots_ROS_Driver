@@ -319,7 +319,7 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
   // work when the robot is in remote-control mode.
   tare_sensor_srv_ = robot_hw_nh.advertiseService<std_srvs::Trigger::Request, std_srvs::Trigger::Response>(
       "zero_ftsensor", [&](std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& resp) {
-        resp.success = this->ur_driver_->sendScript(R"(def tareSensor():
+        resp.success = this->ur_driver_->sendScript(R"(sec tareSensor():
   set_digital_out(1,True)
   zero_ftsensor()
 end
