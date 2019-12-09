@@ -52,8 +52,8 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
                               std::function<void(bool)> handle_program_state, bool headless_mode,
                               std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum)
   : servoj_time_(0.008)
-  , servoj_gain_(2000)
-  , servoj_lookahead_time_(0.03)
+  , servoj_gain_(300)
+  , servoj_lookahead_time_(0.1)
   , reverse_interface_active_(false)
   , handle_program_state_(handle_program_state)
   , robot_ip_(robot_ip)
