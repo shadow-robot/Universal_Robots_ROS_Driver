@@ -21,10 +21,10 @@
   <arg name="headless_mode" default="false" doc="Automatically send URScript to robot to execute. On e-Series this does require the robot to be in 'remote-control' mode. With this, the URCap is not needed on the robot."/>
 
   <!-- robot model -->
-  <include file="$(arg robot_description_file)">
+  <!--include file="$(arg robot_description_file)">
     <arg name="limited" value="$(arg limited)"/>
     <arg name="kinematics_config" value="$(arg kinematics_config)"/>
-  </include>
+  </include-->
 
   <!-- Convert joint states to /tf tranforms -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
