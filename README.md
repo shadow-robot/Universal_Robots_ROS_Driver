@@ -1,5 +1,7 @@
 # Shadow install instructions
 
+
+```bash
 $ cd /home/user/projects/shadow_robot/base
 
 $ git clone https://github.com/shadow-robot/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
@@ -14,6 +16,7 @@ $ rosdep install --from-path src --ignore-src -y
 
 # build the workspace
 $ catkin_make
+```
 
 # Original UR README:
 
