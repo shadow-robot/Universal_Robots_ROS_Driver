@@ -1,5 +1,21 @@
-[![Build Status](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver.svg?branch=master)](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver)
+# Shadow install instructions
 
+$ cd /home/user/projects/shadow_robot/base
+
+$ git clone https://github.com/shadow-robot/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
+
+# clone fork of the description to use the calibration feature
+$ git clone -b calibration_devel https://github.com/shadow-robot/universal_robot.git src/fmauch_universal_robot
+
+# install dependencies
+$ sudo apt update -qq
+$ rosdep update
+$ rosdep install --from-path src --ignore-src -y
+
+# build the workspace
+$ catkin_make
+
+# Original UR README:
 
 # Universal_Robots_ROS_Driver
 Universal Robots have become a dominant supplier of lightweight, robotic manipulators for industry, as well as for scientific research and education. The Robot Operating System (ROS) has developed from a community-centered movement to a mature framework and quasi standard, providing a rich set of powerful tools for robot engineers and researchers, working in many different domains.
