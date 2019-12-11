@@ -144,8 +144,6 @@ std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage
 {
   std::chrono::milliseconds timeout(get_packet_timeout);  // We deliberately have a quite large timeout here, as the robot itself
                                            // should command the control loop's timing.
-  ROS_DEBUG("timeout: %d", get_packet_timeout);
-
   return rtde_client_->getDataPackage(timeout);
 }
 
