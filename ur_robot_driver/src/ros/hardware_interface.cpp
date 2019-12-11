@@ -98,6 +98,12 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
     return false;
   }
 
+  int get_packet_timeout;
+  // The time to wait for a new packet.
+  // This defaults to a large number as the robot should command the timing loop
+  robot_hw_nh.param("get_packet_timeout", get_packet_timeout, 100);
+  ROS_INFO("timeout: %d", get_packet_timeout);
+
   // Whenever the runtime state of the "External Control" program node in the UR-program changes, a
   // message gets published here. So this is equivalent to the information whether the robot accepts
   // commands from ROS side.
@@ -207,7 +213,7 @@ bool HardwareInterface::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw
   {
     ur_driver_.reset(new UrDriver(robot_ip_, script_filename, output_recipe_filename, input_recipe_filename,
                                   std::bind(&HardwareInterface::handleRobotProgramState, this, std::placeholders::_1),
-                                  headless_mode, std::move(tool_comm_setup), calibration_checksum));
+                                  headless_mode, std::move(tool_comm_setup), calibration_checksum, get_packet_timeout));
   }
   catch (ur_driver::ToolCommNotAvailable& e)
   {

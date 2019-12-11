@@ -50,13 +50,14 @@ static const std::string SERVER_PORT_REPLACE("{{SERVER_PORT_REPLACE}}");
 ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& script_file,
                               const std::string& output_recipe_file, const std::string& input_recipe_file,
                               std::function<void(bool)> handle_program_state, bool headless_mode,
-                              std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum)
+                              std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum, int get_packet_timeout)
   : servoj_time_(0.008)
   , servoj_gain_(2000)
   , servoj_lookahead_time_(0.03)
   , reverse_interface_active_(false)
   , handle_program_state_(handle_program_state)
   , robot_ip_(robot_ip)
+  , get_packet_timeout(100)
 {
   LOG_DEBUG("Initializing urdriver");
   LOG_DEBUG("Initializing RTDE client");
@@ -142,8 +143,10 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
 
 std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage()
 {
-  std::chrono::milliseconds timeout(100);  // We deliberately have a quite large timeout here, as the robot itself
+  std::chrono::milliseconds timeout(get_packet_timeout);  // We deliberately have a quite large timeout here, as the robot itself
                                            // should command the control loop's timing.
+  ROS_DEBUG("timeout: %d", get_packet_timeout);
+
   return rtde_client_->getDataPackage(timeout);
 }
 
