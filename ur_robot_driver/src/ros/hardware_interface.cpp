@@ -420,7 +420,7 @@ void HardwareInterface::read(const ros::Time& time, const ros::Duration& period)
   }
   else
   {
-    ROS_ERROR("Could not get fresh data package from robot");
+    // ROS_ERROR("Could not get fresh data package from robot");
   }
 }
 
