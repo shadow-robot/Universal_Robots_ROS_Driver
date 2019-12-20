@@ -13,9 +13,9 @@ hardware_interface:
      - ra_wrist_3_joint
 
 # Publish all joint states ----------------------------------
-joint_state_controller:
-   type:         joint_state_controller/JointStateController
-   publish_rate: 125
+#joint_state_controller:
+#   type:         joint_state_controller/JointStateController
+#   publish_rate: 125
 
 # Publish wrench ----------------------------------
 force_torque_sensor_controller:
@@ -60,3 +60,20 @@ pos_traj_controller:
    stop_trajectory_duration: 0.5
    state_publish_rate: 125
    action_monitor_rate: 10
+
+ra_trajectory_controller:
+   type: position_controllers/JointTrajectoryController
+   joints: *robot_joints
+   constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      ra_shoulder_pan_joint: {trajectory: 0.2, goal: 0.1}
+      ra_shoulder_lift_joint: {trajectory: 0.2, goal: 0.1}
+      ra_elbow_joint: {trajectory: 0.2, goal: 0.1}
+      ra_wrist_1_joint: {trajectory: 0.2, goal: 0.1}
+      ra_wrist_2_joint: {trajectory: 0.2, goal: 0.1}
+      ra_wrist_3_joint: {trajectory: 0.2, goal: 0.1}
+   stop_trajectory_duration: 0.5
+   state_publish_rate: 125
+   action_monitor_rate: 10
+

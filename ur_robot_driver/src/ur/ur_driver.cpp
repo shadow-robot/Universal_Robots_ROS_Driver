@@ -142,7 +142,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
 
 std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage()
 {
-  std::chrono::milliseconds timeout(0);  // We deliberately have a quite large timeout here, as the robot itself
+  std::chrono::milliseconds timeout(100);  // We deliberately have a quite large timeout here, as the robot itself
                                            // should command the control loop's timing.
   return rtde_client_->getDataPackage(timeout);
 }
