@@ -52,8 +52,8 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
                               std::function<void(bool)> handle_program_state, bool headless_mode,
                               std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum,
                               const uint32_t reverse_port, const uint32_t script_sender_port)
-  : servoj_time_(0.008)
-  , servoj_gain_(2000)
+  : servoj_time_(0.1)
+  , servoj_gain_(300)
   , servoj_lookahead_time_(0.03)
   , reverse_interface_active_(false)
   , reverse_port_(reverse_port)
@@ -141,7 +141,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
 
 std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage()
 {
-  std::chrono::milliseconds timeout(100);  // We deliberately have a quite large timeout here, as the robot itself
+  std::chrono::milliseconds timeout(0);  // We deliberately have a quite large timeout here, as the robot itself
                                            // should command the control loop's timing.
   return rtde_client_->getDataPackage(timeout);
 }

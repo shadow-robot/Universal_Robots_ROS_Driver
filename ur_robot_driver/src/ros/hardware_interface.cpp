@@ -429,10 +429,10 @@ void HardwareInterface::read(const ros::Time& time, const ros::Duration& period)
       speed_scaling_combined_ = speed_scaling_ * target_speed_fraction_;
     }
   }
-  else
-  {
-    ROS_ERROR("Could not get fresh data package from robot");
-  }
+  //else
+  //{
+  //  ROS_ERROR("Could not get fresh data package from robot");
+  //}
 }
 
 void HardwareInterface::write(const ros::Time& time, const ros::Duration& period)
