@@ -31,6 +31,7 @@
 #include "ur_robot_driver/comm/reverse_interface.h"
 #include "ur_robot_driver/comm/script_sender.h"
 #include "ur_robot_driver/ur/tool_communication.h"
+#include "ur_robot_driver/ur/version_information.h"
 #include "ur_robot_driver/primary/robot_message/version_message.h"
 #include "ur_robot_driver/rtde/rtde_writer.h"
 
@@ -57,11 +58,16 @@ public:
    * \param tool_comm_setup Configuration for using the tool communication.
    * \param calibration_checksum Expected checksum of calibration. Will be matched against the
    * calibration reported by the robot.
+   * \param reverse_port Port that will be opened by the driver to allow direct communication between the driver
+   * and the robot controller.
+   * \param script_sending_port The driver will offer an interface to receive the program's URScript on this port. If
+   * the robot cannot connect to this port, `External Control` will stop immediately.
    * \param get_packet_timeout Time to wait for a new packet.
    */
   UrDriver(const std::string& robot_ip, const std::string& script_file, const std::string& output_recipe_file,
            const std::string& input_recipe_file, std::function<void(bool)> handle_program_state, bool headless_mode,
-           std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum = "", int get_packet_timeout = 100);
+           std::unique_ptr<ToolCommSetup> tool_comm_setup, const std::string& calibration_checksum = "",
+           const uint32_t reverse_port = 50001, const uint32_t script_sender_port = 50002, int get_packet_timeout = 100);
   /*!
    * \brief Constructs a new UrDriver object.
    *
@@ -73,13 +79,18 @@ public:
    * \param headless_mode Parameter to control if the driver should be started in headless mode.
    * \param calibration_checksum Expected checksum of calibration. Will be matched against the
    * calibration reported by the robot.
-   * \param get_packet_timeout Time to wait for a new packet.
+   * \param reverse_port Port that will be opened by the driver to allow direct communication between the driver
+   * and the robot controller
+   * \param script_sending_port The driver will offer an interface to receive the program's URScript on this port.
+   * If the robot cannot connect to this port, `External Control` will stop immediately.
+   * \param get_packet_timeout Time to wait for a new packet.      
    */
   UrDriver(const std::string& robot_ip, const std::string& script_file, const std::string& output_recipe_file,
            const std::string& input_recipe_file, std::function<void(bool)> handle_program_state, bool headless_mode,
-           const std::string& calibration_checksum = "", int get_packet_timeout = 100)
+           const std::string& calibration_checksum = "", const uint32_t reverse_port = 50001,
+           const uint32_t script_sender_port = 50002)
     : UrDriver(robot_ip, script_file, output_recipe_file, input_recipe_file, handle_program_state, headless_mode,
-               std::unique_ptr<ToolCommSetup>{}, calibration_checksum, get_packet_timeout)
+               std::unique_ptr<ToolCommSetup>{}, calibration_checksum, reverse_port, script_sender_port, get_packet_timeout)
   {
   }
 
@@ -175,6 +186,14 @@ public:
    */
   bool sendRobotProgram();
 
+  /*!
+   * \brief Returns version information about the currently connected robot
+   */
+  const VersionInformation& getVersion()
+  {
+    return robot_version_;
+  }
+
 private:
   std::string readScriptFile(const std::string& filename);
   std::string readKeepalive();
@@ -201,6 +220,8 @@ private:
   std::string full_robot_program_;
 
   int get_packet_timeout;
+
+  VersionInformation robot_version_;
 };
 }  // namespace ur_driver
 #endif  // ifndef UR_RTDE_DRIVER_UR_UR_DRIVER_H_INCLUDED
