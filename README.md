@@ -7,7 +7,7 @@ $ roscd sr_ur_arm
 
 $ git fetch && git checkout F#SRC-3432_test_integrate_new_driver_arms_hands
 
-$ roscd sr_ur_arm
+$ roscd sr_interface
 
 $ git fetch && git checkout F#SRC-3432_test_integrate_new_driver_arms_hands
 
