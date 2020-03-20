@@ -181,6 +181,7 @@ bool UrDriver::writeKeepalive()
   if (reverse_interface_active_)
   {
     vector6d_t* fake = nullptr;
+    ROS_INFO("writeKeepalive");
     return reverse_interface_->write(fake, comm::ControlMode::MODE_IDLE);
   }
   return false;
@@ -215,7 +216,8 @@ void UrDriver::startWatchdog()
     while (reverse_interface_active_ == true)
     {
       std::string keepalive = readKeepalive();
-
+      // ROS_INFO_STREAM("keepalive: " << keepalive);
+      // keepalive = "1";
       if (keepalive == std::string(""))
       {
         reverse_interface_active_ = false;

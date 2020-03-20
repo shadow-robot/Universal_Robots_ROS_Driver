@@ -117,6 +117,9 @@ public:
     b_pos += append(b_pos, val);
 
     size_t written;
+    std::string st; //(b_pos);
+    st.assign(*b_pos, *b_pos + sizeof(*b_pos));
+    ROS_INFO_STREAM("written: " << st);
 
     return server_.write(buffer, sizeof(buffer), written);
   }
@@ -126,12 +129,16 @@ public:
    *
    * \returns The received keepalive string or the empty string, if nothing was received
    */
+  bool last_successful = false;
   std::string readKeepalive()
   {
     size_t buf_len = 16;
     char buffer[buf_len];
 
     bool read_successful = server_.readLine(buffer, buf_len);
+    if (read_successful != last_successful)
+      ROS_INFO("read_successful changed");
+    last_successful = read_successful;
 
     if (read_successful)
     {

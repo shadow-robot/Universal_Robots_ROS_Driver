@@ -533,6 +533,13 @@ bool HardwareInterface::prepareSwitch(const std::list<hardware_interface::Contro
 void HardwareInterface::doSwitch(const std::list<hardware_interface::ControllerInfo>& start_list,
                                  const std::list<hardware_interface::ControllerInfo>& stop_list)
 {
+  for (auto& controller_it : start_list)
+    ROS_INFO_STREAM("hw_interface:start_list: " << controller_it.name);
+
+  for (auto& controller_it : stop_list)
+    ROS_INFO_STREAM("hw_interface:stop_list: " << controller_it.name);
+
+
   if ((!stop_list.empty()) || (!start_list.empty()))
   {
     position_controller_running_ = false;
