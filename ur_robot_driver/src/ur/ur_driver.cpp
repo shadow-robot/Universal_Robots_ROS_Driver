@@ -163,6 +163,8 @@ std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage
   // This can take one of two values, 0ms or 100ms. The large timeout is for when the robot is commanding the control
   // loop's timing (read is blocking). The zero timeout is for when the robot is sharing a control loop with
   // something else (combined_robot_hw)
+  LOG_WARN("Get packet timeout:\n%s", get_packet_timeout_.c_str());
+
   std::chrono::milliseconds timeout(get_packet_timeout_);
 
   return rtde_client_->getDataPackage(timeout);
@@ -275,9 +277,9 @@ void UrDriver::checkCalibration(const std::string& checksum)
 
   while (!consumer.isChecked())
   {
-    ros::Duration(1).sleep();
+    ros::Duration(0.5).sleep();
   }
-  ROS_DEBUG_STREAM("Got calibration information from robot.");
+  ROS_WARN_STREAM("Got calibration information from robot.");
 }
 
 rtde_interface::RTDEWriter& UrDriver::getRTDEWriter()
