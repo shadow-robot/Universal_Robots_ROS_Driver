@@ -163,7 +163,6 @@ std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage
   // This can take one of two values, 0ms or 100ms. The large timeout is for when the robot is commanding the control
   // loop's timing (read is blocking). The zero timeout is for when the robot is sharing a control loop with
   // something else (combined_robot_hw)
-  LOG_WARN("Get packet timeout:\n%s", get_packet_timeout_.c_str());
 
   std::chrono::milliseconds timeout(get_packet_timeout_);
 
