@@ -120,7 +120,7 @@ int main(int argc, char** argv)
   }
   ROS_DEBUG_STREAM("initialized hw interface");
 
-  ROS_WARN_STREAM("HW_INTERFACE_NODE - Initialize hw interface: " << g_hw_interface.get());
+  ROS_WARN_STREAM("HW_INTERFACE_NODE - Initialize hw interface: %s" << g_hw_interface.get());
   controller_manager::ControllerManager cm(g_hw_interface.get(), nh);
 
   // Get current time and elapsed time since last read

@@ -134,7 +134,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
   in_headless_mode_ = headless_mode;
   if (in_headless_mode_)
   {
-    LOG_WARN("Sending ROBOT PROGRAM TO: ", robot_ip_.c_str());
+    LOG_WARN("Sending ROBOT PROGRAM TO: %s", robot_ip_.c_str());
     full_robot_program_ = "def externalControl():\n";
     std::istringstream prog_stream(prog);
     std::string line;
@@ -257,6 +257,7 @@ std::string UrDriver::readKeepalive()
 
 void UrDriver::checkCalibration(const std::string& checksum)
 {
+  ROS_WARN("Starting CHECK CALIBRATION");
   if (primary_stream_ == nullptr)
   {
     throw std::runtime_error("checkCalibration() called without a primary interface connection being established.");
@@ -314,7 +315,7 @@ bool UrDriver::sendRobotProgram()
 {
   if (in_headless_mode_)
   {
-    LOG_WARN("sending robot program: ", full_robot_program_.c_str());
+    LOG_WARN("sending robot program:\n%s ", full_robot_program_.c_str());
     return sendScript(full_robot_program_);
   }
   else
