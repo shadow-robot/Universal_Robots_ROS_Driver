@@ -119,6 +119,8 @@ int main(int argc, char** argv)
     exit(1);
   }
   ROS_DEBUG_STREAM("initialized hw interface");
+
+  ROS_WARN_STREAM("HW_INTERFACE_NODE - Initialize hw interface: " << g_hw_interface.get());
   controller_manager::ControllerManager cm(g_hw_interface.get(), nh);
 
   // Get current time and elapsed time since last read
@@ -147,8 +149,8 @@ int main(int argc, char** argv)
     // if (!control_rate.sleep())
     if (period.toSec() > expected_cycle_time)
     {
-      // ROS_WARN_STREAM("Could not keep cycle rate of " << expected_cycle_time * 1000 << "ms");
-      // ROS_WARN_STREAM("Actual cycle time:" << period.toNSec() / 1000000.0 << "ms");
+      ROS_WARN_STREAM("Could not keep cycle rate of " << expected_cycle_time * 1000 << "ms");
+      ROS_WARN_STREAM("Actual cycle time:" << period.toNSec() / 1000000.0 << "ms");
     }
   }
 

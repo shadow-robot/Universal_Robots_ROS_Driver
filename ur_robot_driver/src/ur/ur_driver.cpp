@@ -71,7 +71,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
       robot_ip_, ur_driver::primary_interface::UR_SECONDARY_PORT));
   secondary_stream_->connect();
   LOG_INFO("Checking if calibration data matches connected robot.");
-  checkCalibration(calibration_checksum);
+  //checkCalibration(calibration_checksum);
 
   non_blocking_read_ = non_blocking_read;
   get_packet_timeout_ = non_blocking_read_ ? 0 : 100;
@@ -134,6 +134,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
   in_headless_mode_ = headless_mode;
   if (in_headless_mode_)
   {
+    LOG_WARN("Sending ROBOT PROGRAM TO: ", robot_ip_.c_str());
     full_robot_program_ = "def externalControl():\n";
     std::istringstream prog_stream(prog);
     std::string line;
@@ -302,7 +303,7 @@ bool UrDriver::sendScript(const std::string& program)
 
   if (secondary_stream_->write(data, len, written))
   {
-    LOG_DEBUG("Sent program to robot:\n%s", program_with_newline.c_str());
+    LOG_WARN("Sent program to robot:\n%s", program_with_newline.c_str());
     return true;
   }
   LOG_ERROR("Could not send program to robot");
@@ -313,6 +314,7 @@ bool UrDriver::sendRobotProgram()
 {
   if (in_headless_mode_)
   {
+    LOG_WARN("sending robot program: ", full_robot_program_.c_str());
     return sendScript(full_robot_program_);
   }
   else
