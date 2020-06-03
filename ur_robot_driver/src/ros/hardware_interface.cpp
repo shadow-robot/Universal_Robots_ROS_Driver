@@ -704,7 +704,7 @@ bool HardwareInterface::stopControl(std_srvs::TriggerRequest& req, std_srvs::Tri
   if (isRobotProgramRunning())
   {
     ROS_WARN_STREAM("SETTING ROBOT PROGRAM TO FALSE");
-    robot_program_running_ = false;
+    //robot_program_running_ = false;
     res.success = true;
     res.message = "Deactivated control";
   }

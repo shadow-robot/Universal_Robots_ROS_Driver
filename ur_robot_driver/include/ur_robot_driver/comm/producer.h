@@ -54,7 +54,7 @@ public:
    * \param parser The parser to use to interpret received byte information
    */
   URProducer(URStream<HeaderT>& stream, Parser<HeaderT>& parser)
-    : stream_(stream), parser_(parser), timeout_(1), running_(false)
+    : stream_(stream), parser_(parser), timeout_(1.5), running_(false)
   {
   }
 
@@ -65,10 +65,11 @@ public:
   {
     timeval tv;
     tv.tv_sec = 1;
-    tv.tv_usec = 0;
+    tv.tv_usec = 500000;
     stream_.setReceiveTimeout(tv);
     if (!stream_.connect())
     {
+      ROS_WARN_STREAM("Failed to connect to robot. Please check if the robot is booted and connected.");
       throw UrException("Failed to connect to robot. Please check if the robot is booted and connected.");
     }
   }
