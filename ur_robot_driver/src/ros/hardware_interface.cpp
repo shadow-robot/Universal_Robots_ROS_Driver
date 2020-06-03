@@ -445,14 +445,14 @@ void HardwareInterface::read(const ros::Time& time, const ros::Duration& period)
     // pausing state follows runtime state when pausing
     if (runtime_state_ == static_cast<uint32_t>(rtde_interface::RUNTIME_STATE::PAUSED))
     {
-      ROS_WARN_STREAM("Runtime state IS PAUSED: %s" << ros::this_node::getName());
+      ROS_WARN_STREAM("Runtime state IS PAUSED");
       pausing_state_ = PausingState::PAUSED;
     }
     // When the robot resumed program execution and pausing state was PAUSED, we enter RAMPUP
     else if (runtime_state_ == static_cast<uint32_t>(rtde_interface::RUNTIME_STATE::PLAYING) &&
              pausing_state_ == PausingState::PAUSED)
     {
-      ROS_WARN_STREAM("Runtime state IS PLAYING: %s" << ros::this_node::getName());
+      ROS_WARN_STREAM("Runtime state IS PLAYING" );
       speed_scaling_combined_ = 0.0;
       pausing_state_ = PausingState::RAMPUP;
     }
@@ -514,6 +514,7 @@ bool HardwareInterface::prepareSwitch(const std::list<hardware_interface::Contro
                                       const std::list<hardware_interface::ControllerInfo>& stop_list)
 {
   bool ret_val = true;
+  ROS_WARN_STREAM("NODE NAME: %s" << ros::this_node::getName());
   ROS_WARN_STREAM("IS ROBOT PROGRAM RUNNING???: " << isRobotProgramRunning());
   if (controllers_initialized_ && !isRobotProgramRunning() && !start_list.empty())
   {
@@ -699,8 +700,10 @@ void HardwareInterface::publishToolData()
 
 bool HardwareInterface::stopControl(std_srvs::TriggerRequest& req, std_srvs::TriggerResponse& res)
 {
+  ROS_WARN_STREAM("STOP CONTROL");
   if (isRobotProgramRunning())
   {
+    ROS_WARN_STREAM("SETTING ROBOT PROGRAM TO FALSE");
     robot_program_running_ = false;
     res.success = true;
     res.message = "Deactivated control";
