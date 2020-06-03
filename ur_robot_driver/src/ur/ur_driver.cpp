@@ -195,6 +195,7 @@ void UrDriver::startRTDECommunication()
 
 bool UrDriver::stopControl()
 {
+  ROS_WARN_STREAM("STOP CONTROL IN UR DRIVER");
   if (reverse_interface_active_)
   {
     vector6d_t* fake = nullptr;
