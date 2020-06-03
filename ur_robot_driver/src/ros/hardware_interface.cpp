@@ -445,12 +445,14 @@ void HardwareInterface::read(const ros::Time& time, const ros::Duration& period)
     // pausing state follows runtime state when pausing
     if (runtime_state_ == static_cast<uint32_t>(rtde_interface::RUNTIME_STATE::PAUSED))
     {
+      LOG_WARN("Runtime state IS PAUSED: %s", ros::this_node::getName());
       pausing_state_ = PausingState::PAUSED;
     }
     // When the robot resumed program execution and pausing state was PAUSED, we enter RAMPUP
     else if (runtime_state_ == static_cast<uint32_t>(rtde_interface::RUNTIME_STATE::PLAYING) &&
              pausing_state_ == PausingState::PAUSED)
     {
+      LOG_WARN("Runtime state IS PLAYING: %s", ros::this_node::getName());
       speed_scaling_combined_ = 0.0;
       pausing_state_ = PausingState::RAMPUP;
     }
@@ -793,6 +795,8 @@ end
 
 void HardwareInterface::commandCallback(const std_msgs::StringConstPtr& msg)
 {
+  LOG_WARN("COMMAND CALLBACK FOR NODE: %s", ros::this_node::getName());
+
   std::string str = msg->data;
   if (str.back() != '\n')
   {
@@ -807,7 +811,7 @@ void HardwareInterface::commandCallback(const std_msgs::StringConstPtr& msg)
 
   if (ur_driver_->sendScript(str))
   {
-    ROS_DEBUG_STREAM("Sent script to robot");
+    ROS_WARN_STREAM("Sent script to robot");
   }
   else
   {

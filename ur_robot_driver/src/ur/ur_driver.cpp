@@ -71,7 +71,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
       robot_ip_, ur_driver::primary_interface::UR_SECONDARY_PORT));
   secondary_stream_->connect();
   LOG_INFO("Checking if calibration data matches connected robot.");
-  //checkCalibration(calibration_checksum);
+  checkCalibration(calibration_checksum);
 
   non_blocking_read_ = non_blocking_read;
   get_packet_timeout_ = non_blocking_read_ ? 0 : 100;
@@ -155,7 +155,7 @@ ur_driver::UrDriver::UrDriver(const std::string& robot_ip, const std::string& sc
   reverse_port_ = reverse_port;
   watchdog_thread_ = std::thread(&UrDriver::startWatchdog, this);
 
-  LOG_DEBUG("Initialization done");
+  LOG_WARN("Initialization done");
 }
 
 std::unique_ptr<rtde_interface::DataPackage> ur_driver::UrDriver::getDataPackage()
@@ -276,7 +276,7 @@ void UrDriver::checkCalibration(const std::string& checksum)
 
   while (!consumer.isChecked())
   {
-    ros::Duration(0.5).sleep();
+    ros::Duration(1.0).sleep();
   }
   ROS_WARN_STREAM("Got calibration information from robot.");
 }
