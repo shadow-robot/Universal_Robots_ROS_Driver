@@ -203,7 +203,6 @@ std::unique_ptr<rtde_interface::DataPackage> RTDEClient::getDataPackage(std::chr
     rtde_interface::DataPackage* tmp = dynamic_cast<rtde_interface::DataPackage*>(urpackage.get());
     if (tmp != nullptr)
     {
-      ROS_WARN_STREAM("RELEASE PACKAGE");
       urpackage.release();
       return std::unique_ptr<rtde_interface::DataPackage>(tmp);
     }
