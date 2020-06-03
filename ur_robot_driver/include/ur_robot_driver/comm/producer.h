@@ -54,7 +54,7 @@ public:
    * \param parser The parser to use to interpret received byte information
    */
   URProducer(URStream<HeaderT>& stream, Parser<HeaderT>& parser)
-    : stream_(stream), parser_(parser), timeout_(1.5), running_(false)
+    : stream_(stream), parser_(parser), timeout_(2), running_(false)
   {
   }
 
@@ -64,8 +64,8 @@ public:
   void setupProducer() override
   {
     timeval tv;
-    tv.tv_sec = 1;
-    tv.tv_usec = 500000;
+    tv.tv_sec = 2;
+    tv.tv_usec = 0;
     stream_.setReceiveTimeout(tv);
     if (!stream_.connect())
     {
@@ -113,7 +113,7 @@ public:
       if (stream_.read(buf, sizeof(buf), read))
       {
         // reset sleep amount
-        timeout_ = std::chrono::seconds(1);
+        timeout_ = std::chrono::seconds(2);
         BinParser bp(buf, read);
         return parser_.parse(bp, products);
       }

@@ -405,7 +405,7 @@ void HardwareInterface::readBitsetData(const std::unique_ptr<rtde_interface::Dat
 
 void HardwareInterface::read(const ros::Time& time, const ros::Duration& period)
 {
-  std::unique_ptr<rtde_interface::DataPackage> data_pkg = ur_driver_->getDataPackage(2000);
+  std::unique_ptr<rtde_interface::DataPackage> data_pkg = ur_driver_->getDataPackage();
   if (data_pkg)
   {
     packet_read_ = true;

@@ -195,8 +195,10 @@ std::vector<std::string> RTDEClient::readRecipe(const std::string& recipe_file)
 
 std::unique_ptr<rtde_interface::DataPackage> RTDEClient::getDataPackage(std::chrono::milliseconds timeout)
 {
+
+  std::chrono::milliseconds timeout_test_ = std::chrono::milliseconds(2000);
   std::unique_ptr<comm::URPackage<rtde_interface::PackageHeader>> urpackage;
-  if (pipeline_.getLatestProduct(urpackage, timeout))
+  if (pipeline_.getLatestProduct(urpackage, timeout_test_))
   {
     rtde_interface::DataPackage* tmp = dynamic_cast<rtde_interface::DataPackage*>(urpackage.get());
     if (tmp != nullptr)
