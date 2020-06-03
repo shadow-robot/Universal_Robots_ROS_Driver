@@ -277,6 +277,7 @@ void UrDriver::checkCalibration(const std::string& checksum)
   while (!consumer.isChecked())
   {
     ros::Duration(1.0).sleep();
+    ROS_WARN_STREAM("WAITING FOR CHECKED");
   }
   ROS_WARN_STREAM("Got calibration information from robot.");
 }
@@ -305,7 +306,6 @@ bool UrDriver::sendScript(const std::string& program)
 
   if (secondary_stream_->write(data, len, written))
   {
-    LOG_WARN("Sent program to robot:\n%s", program_with_newline.c_str());
     return true;
   }
   LOG_ERROR("Could not send program to robot");
