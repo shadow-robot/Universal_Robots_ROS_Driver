@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver.svg?branch=master)](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 # ⛔️ DEPRECATED Universal_Robots_ROS_Driver
 ## This is no longer supported, please consider using https://github.com/UniversalRobots/Universal_Robots_ROS_Driver instead
