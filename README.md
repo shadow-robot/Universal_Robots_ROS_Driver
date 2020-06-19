@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver.svg?branch=master)](https://travis-ci.org/UniversalRobots/Universal_Robots_ROS_Driver)
 
-# DEPRECATED
-# Universal_Robots_ROS_Driver
+# DEPRECATED Universal_Robots_ROS_Driver
+## This is no longer supported, please consider using https://github.com/UniversalRobots/Universal_Robots_ROS_Driver instead
 Universal Robots have become a dominant supplier of lightweight, robotic manipulators for industry, as well as for scientific research and education. The Robot Operating System (ROS) has developed from a community-centered movement to a mature framework and quasi standard, providing a rich set of powerful tools for robot engineers and researchers, working in many different domains.
 
 <center><img src="ur_robot_driver/doc/initial_setup_images/e-Series.png" alt="Universal Robot e-Series family" style="width: 45%;"/></center>
